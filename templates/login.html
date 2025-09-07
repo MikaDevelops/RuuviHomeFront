@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        async function sendLogin(){
+            const response = await fetch(
+                'login', {
+                    method: 'POST',
+                    headers: {'Accept': 'application/json', 'Content-Type':'application/json'},
+                    body: JSON.stringify({passwordings: document.getElementById('inputField').value})
+                }
+            );
+            const content = await response.json();
+            localStorage.setItem('ruuviHomeAccessToken', content.token);
+            console.log(localStorage.getItem('ruuviHomeAccessToken'));
+        }
+    </script>
+</head>
+<body>
+    <input type="password" id="inputField">
+    <button onclick="sendLogin()">login</button>
+</body>
+</html>

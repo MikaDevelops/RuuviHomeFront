@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="{{ url_for('static', filename='something.js') }}"></script>
+    <script src="{{ url_for('static', filename='data.js') }}"></script>
+    <script>
+        const tokenData = localStorage.getItem('ruuviHomeAccessToken') ? localStorage.getItem('ruuviHomeAccessToken') : {};
+        async function renderData(){
+            let fromTime = document.getElementById('from-date').valueAsNumber /1000;
+            let toTime = document.getElementById('to-date').valueAsNumber /1000;
+            document.getElementById('data-area').innerHTML = await getData(fromTime, toTime, tokenData);
+        }
+    </script>
 </head>
 <body>
-    This is a template webpage
+    <input type="date" id="from-date"> - 
+    <input type="date" id="to-date">
+    <button onclick="renderData();">get data</button><br>
+    <div id="data-area"></div>
 </body>
 </html>

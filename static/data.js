@@ -1,4 +1,6 @@
-async function getData(startTime, endTime, loginToken){
-    let fetchUrl = `127.0.0.1:5000/getdata?from=${startTime}&to=${endTime}$token=${loginToken}`;
-    fetch()
+async function getData(startTime, endTime, loginToken=0){
+    let fetchUrl = `data?from=${startTime}&to=${endTime}&token=${loginToken}`;
+    let response = await fetch(fetchUrl);
+    if (!response.ok) throw new Error (`response status: ${response.status}`);
+    return await response.text();
 }
