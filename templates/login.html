@@ -15,12 +15,16 @@
             );
             const content = await response.json();
             localStorage.setItem('ruuviHomeAccessToken', content.token);
-            console.log(localStorage.getItem('ruuviHomeAccessToken'));
         }
     </script>
 </head>
 <body>
     <input type="password" id="inputField">
     <button onclick="sendLogin()">login</button>
+    <script>
+        document.getElementById('inputField').addEventListener("keydown", (event)=>{
+            if (event.keyCode === 13) sendLogin();
+        });
+    </script>
 </body>
 </html>

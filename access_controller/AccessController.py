@@ -33,7 +33,6 @@ class AccessController:
         textPart = "".join(chosenLetters)
         dateTimeNum = str(int(datetime.timestamp(datetime.now())))
         token = textPart + dateTimeNum
-        print(token)
         validUntil = int(datetime.timestamp(datetime.now())) + 3600
         self.givenToken = {
             "token": token,

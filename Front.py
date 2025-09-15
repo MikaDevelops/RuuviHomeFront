@@ -24,9 +24,11 @@ def tryLogin():
 @app.route("/data")
 def dataFetch():
     if accController.checkToken(request.args.get('token')):
-        return "success"
+        newToken = accController.renewToken(request.args.get('token'))
+        jsonString = '{"token":"'+newToken+'","data":"some data"}'
+        return jsonString
     else:
-        return "please login"
+        return '{"token":"failed"}'
 
 if __name__ == "__main__":
     arg = sys.argv[1]

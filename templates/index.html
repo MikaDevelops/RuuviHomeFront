@@ -6,11 +6,54 @@
     <title>Document</title>
     <script src="{{ url_for('static', filename='data.js') }}"></script>
     <script>
-        const tokenData = localStorage.getItem('ruuviHomeAccessToken') ? localStorage.getItem('ruuviHomeAccessToken') : {};
         async function renderData(){
+            let tokenData = localStorage.getItem('ruuviHomeAccessToken') ? localStorage.getItem('ruuviHomeAccessToken') : {};
             let fromTime = document.getElementById('from-date').valueAsNumber /1000;
             let toTime = document.getElementById('to-date').valueAsNumber /1000;
-            document.getElementById('data-area').innerHTML = await getData(fromTime, toTime, tokenData);
+            let data = await getData(fromTime, toTime, tokenData);
+            console.log(data)
+            if (data.token == "failed") document.getElementById('data-area').innerHTML = "please login";
+            else {
+                localStorage.setItem('ruuviHomeAccessToken', data.token);
+                
+                //mock
+                data.data = [
+                    {
+                        epochTime: 1757874070,
+                        humidity: 57.42,
+                        temperature:20.26,
+                        pressure:1005.86,
+                        acceleration:1020.5723884174,
+                        acceleration_x:12,
+                        acceleration_y:-32,
+                        acceleration_z:-1020,
+                        tx_power:4,
+                        battery:2886,
+                        movement_counter:86,
+                        measurement_sequence_number:5682,
+                        mac:'acb595fb4f72',
+                        rssi:-83
+                    },
+                    {
+                        epochTime: 1757878070,
+                        humidity: 56.32,
+                        temperature:23.26,
+                        pressure:1002.78,
+                        acceleration:1020.5723884174,
+                        acceleration_x:12,
+                        acceleration_y:-32,
+                        acceleration_z:-1020,
+                        tx_power:4,
+                        battery:2886,
+                        movement_counter:86,
+                        measurement_sequence_number:562,
+                        mac:'d72deadfd23b',
+                        rssi:-83
+                    }
+                ];
+
+                renderTableToPage("data-area", data.data);
+            }
         }
     </script>
 </head>
